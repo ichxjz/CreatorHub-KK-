@@ -1,6 +1,6 @@
 # CreatorHub -  KK-Tiong_Pavelio
 
-多平台内容工作台 · 开发：KK-Tiong_Pavelio(https://ichxjz.com)
+多平台内容工作台 · 开发：KK-Tiong_Pavelio(https:ichxjz.com)
 
 独立维护的多平台内容与评论洞察工作台，源码、Windows 安装版和更新记录统一在本项目发布。
 
