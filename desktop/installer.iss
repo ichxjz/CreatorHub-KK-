@@ -1,7 +1,7 @@
 ; Compile after desktop/build_windows.py. The data directory is NEVER installed
 ; into, overwritten, or deleted by the installer/uninstaller.
 #ifndef AppVersion
-  #define AppVersion "0.2.0"
+  #define AppVersion "0.4.4"
 #endif
 #ifndef AppSourceDir
   #define AppSourceDir "..\dist\windows\CreatorHub"

@@ -13,21 +13,21 @@ SOURCE = ROOT / "app" / "web"
 PREVIEW = ROOT / "preview"
 GUIDE = ROOT / "guide"
 GUIDE_IMAGES = (
-    "overview-douyin.png", "accounts-list.png", "monitor-create.png",
-    "monitor-comments.png", "share-download.png", "publish-workflow.png",
-    "account-hub-dm.png", "autocomment-rules.png",
+    "03-keyword-drilldown.gif", "10-feishu-setup.gif",
 )
 
 
 def build_guide(destination: Path) -> None:
-    """Publish only explicitly approved public docs and sanitized screenshots."""
+    """Publish public documentation and the branded demonstration GIFs."""
     destination.mkdir(parents=True, exist_ok=True)
     for name in ("index.html", "guide.css"):
         shutil.copy2(GUIDE / name, destination / name)
     images = destination / "images"
+    if images.exists():
+        shutil.rmtree(images)
     images.mkdir(exist_ok=True)
     for name in GUIDE_IMAGES:
-        shutil.copy2(ROOT / "assets" / "screenshots" / name, images / name)
+        shutil.copy2(ROOT / "assets" / "kk" / name, images / name)
     platforms = json.loads((GUIDE / "platforms.json").read_text(encoding="utf-8"))
     for slug, platform in platforms.items():
         if slug not in {"douyin", "xhs", "kuaishou", "shipinhao"}:
@@ -44,7 +44,7 @@ def build_guide(destination: Path) -> None:
         html = f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>{name}使用指南 · CreatorHub</title>
 <meta name="description" content="{escape(platform['intro'])}"><link rel="stylesheet" href="../guide.css"></head><body>
-<a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../">CreatorHub <span>使用指南</span></a><nav aria-label="平台指南">{links}</nav></header>
+<a class="skip" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../">CreatorHub <span>多平台内容工作台·开发：KK-Tiong_Pavelio</span></a><nav aria-label="平台指南">{links}</nav></header>
 <div class="layout"><aside><nav class="toc" aria-label="本页目录"><p>{name}入门</p><a href="#start">登录与第一个任务</a>{toc}<p>通用帮助</p><a href="../#install">安装与启动</a><a href="../#notifications">通知设置</a><a href="../#queue">任务队列与风控</a><a href="../#backup">更新与备份</a><a href="../#faq">常见问题</a><a href="../">全部功能手册</a></nav></aside>
 <main id="main"><section id="start"><div class="eyebrow">PLATFORM GUIDE</div><h1>{name}使用指南</h1><p class="lead">{escape(platform['intro'])}</p>
 <div class="note">真实操作需要本地运行。还没装好？先看<a href="../#install">安装教程</a>。</div>
@@ -56,6 +56,7 @@ def build_guide(destination: Path) -> None:
 
 
 def build(destination: Path) -> None:
+    """Build an isolated development fixture; never deploy it to public Pages."""
     destination = destination.resolve()
     if destination == ROOT or ROOT not in destination.parents:
         raise ValueError(f"preview destination must stay inside the repository: {destination}")
@@ -85,7 +86,24 @@ def build(destination: Path) -> None:
     (destination / ".nojekyll").write_text("", encoding="utf-8")
 
 
+def build_public(destination: Path) -> None:
+    """Public Pages serves documentation only, without the interactive demo."""
+    destination = destination.resolve()
+    if destination == ROOT or ROOT not in destination.parents:
+        raise ValueError(f"guide destination must stay inside the repository: {destination}")
+    if destination.exists():
+        shutil.rmtree(destination)
+    destination.mkdir(parents=True)
+    build_guide(destination / "guide")
+    (destination / "index.html").write_text('''<!doctype html><html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CreatorHub 使用指南</title><meta http-equiv="refresh" content="0;url=./guide/">
+<h1>CreatorHub</h1><p>多平台内容工作台·开发：KK-Tiong_Pavelio</p>
+<a href="./guide/">打开使用指南</a></html>''', encoding="utf-8")
+    (destination / ".nojekyll").write_text("", encoding="utf-8")
+
+
 if __name__ == "__main__":
     target = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "_site"
-    build(target if target.is_absolute() else ROOT / target)
-    print(f"Built static preview: {target}")
+    build_public(target if target.is_absolute() else ROOT / target)
+    print(f"Built public guide: {target}")

@@ -15,7 +15,7 @@ from preview.build_preview import build_guide
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--version", default="0.2.0")
+    parser.add_argument("--version", default="0.4.4")
     parser.add_argument("--dist-dir", default="dist/windows", help="Repository-local output directory")
     args = parser.parse_args()
     if sys.platform != "win32":

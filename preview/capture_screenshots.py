@@ -1,4 +1,4 @@
-"""Capture README images from the current UI and the isolated static demo.
+"""Capture local regression images from the current UI and the isolated static demo.
 
 Run from the repository root: python -m preview.capture_screenshots
 No backend, real account, persisted browser profile, or external requests are used.
@@ -162,7 +162,7 @@ def capture() -> None:
             thread.join(timeout=5)
 
         # Publish only after every scene passed, so failed runs leave old images intact.
-        destination = ROOT / "assets" / "screenshots"
+        destination = ROOT / "artifacts" / "screenshots"
         destination.mkdir(parents=True, exist_ok=True)
         for scene in SCENES:
             shutil.copy2(staging / scene.filename, destination / scene.filename)

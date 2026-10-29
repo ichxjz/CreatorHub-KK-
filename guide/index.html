@@ -10,8 +10,8 @@
 <body>
 <a class="skip" href="#main">跳到正文</a>
 <header class="topbar">
-  <a class="brand" href="#welcome">CreatorHub <span>使用指南</span></a>
-  <nav aria-label="站点导航"><a href="../">在线体验</a><a href="https://github.com/ichxjz/CreatorHub-KK-">GitHub 项目</a></nav>
+  <a class="brand" href="#welcome">CreatorHub <span>多平台内容工作台·开发：KK-Tiong_Pavelio</span></a>
+  <nav aria-label="站点导航"><a href="https://github.com/ichxjz/CreatorHub-KK-#平台能力">平台能力</a><a href="https://github.com/ichxjz/CreatorHub-KK-">GitHub 项目</a></nav>
 </header>
 <div class="layout">
   <aside>
@@ -24,7 +24,7 @@
       <a href="#first-task">03 · 完成第一个任务</a>
       <p>按功能查阅</p>
       <a href="#monitor">作品监控</a><a href="#collection">关键词采集</a>
-      <a href="#comments">评论与弹幕监控</a><a href="#download">链接下载</a>
+      <a href="#insights">洞察与导出</a><a href="#comments">评论与弹幕监控</a><a href="#download">链接下载</a>
       <a href="#publish">发布与转发</a><a href="#my-content">我的内容与私信</a>
       <a href="#autocomment">自动评论与审核</a><a href="#notifications">通知</a>
       <a href="#queue">任务队列与风控</a><a href="#settings">设置与账号环境</a>
@@ -44,33 +44,23 @@
         <a href="shipinhao/"><strong>视频号</strong><span>本账号作品、数据与发布 →</span></a>
       </div>
       <div class="actions"><a class="button" href="#install">开始安装</a><a class="button secondary" href="#first-task">已经装好？开始第一个任务</a></div>
-      <div class="note"><strong>在线文档 ≠ 在线运行。</strong>本指南和<a href="../">在线体验</a>可以直接打开；体验页使用示例数据。真实登录、采集、下载和发布需要在自己的电脑启动 CreatorHub。关闭服务或电脑休眠后，本地任务不会持续执行。</div>
+      <div class="note">本页是使用指南。真实登录、采集、下载和发布在本机运行；关闭服务或电脑休眠后，任务不会持续执行。</div>
       <h2>先弄清楚三个词</h2>
       <dl><dt>平台账号</dt><dd>你登录 CreatorHub 的抖音、小红书、快手或视频号账号，用来执行任务。</dd><dt>监控目标</dt><dd>你想持续查看的创作者或作品，不等于登录账号。</dd><dt>任务与记录</dt><dd>任务是“准备做什么、正在做什么”；记录是“已经发现或处理的内容”。任务保存成功，不代表已经产生结果。</dd></dl>
-      <h2>平台能力速查</h2>
-      <div class="table-scroll"><table><caption>按当前项目实现整理；平台切换后以可见入口为准</caption><thead><tr><th scope="col">功能</th><th scope="col">抖音</th><th scope="col">小红书</th><th scope="col">快手</th><th scope="col">视频号</th></tr></thead><tbody>
-      <tr><th scope="row">作品 / 评论监控</th><td>支持</td><td>支持</td><td>支持</td><td>仅本账号数据</td></tr>
-      <tr><th scope="row">关键词批量采集</th><td>支持</td><td>支持</td><td>—</td><td>—</td></tr>
-      <tr><th scope="row">短视频弹幕</th><td>支持</td><td>—</td><td>—</td><td>—</td></tr>
-      <tr><th scope="row">内容下载</th><td>支持</td><td>图集 / 视频</td><td>支持</td><td>—</td></tr>
-      <tr><th scope="row">发布</th><td>支持</td><td>图集 / 视频 / 定时</td><td>支持</td><td>支持</td></tr>
-      <tr><th scope="row">自动评论 / 回复</th><td>支持</td><td>支持</td><td>支持</td><td>—</td></tr>
-      <tr><th scope="row">我的内容</th><td>作品 / 关注 / 粉丝 / 私信</td><td>作品 / 关注 / 粉丝 / 私信</td><td>作品 / 关注 / 粉丝</td><td>作品 / 数据 / 评论</td></tr>
-      </tbody></table></div>
+      <p>各平台支持的功能统一列在<a href="https://github.com/ichxjz/CreatorHub-KK-#平台能力">项目主页的平台能力表</a>。</p>
       <p><strong>关键词作品监控</strong>与<strong>关键词批量采集</strong>是不同功能：前者持续检查一个搜索词，后者是一次性批处理。抖音和小红书均支持批量采集。</p>
-      <figure><a href="images/overview-douyin.png"><img src="images/overview-douyin.png" alt="CreatorHub 工作概览，左侧为功能导航，顶部可切换平台" width="1600" loading="lazy"></a><figcaption>界面截图使用示例数据。点击图片可查看原图；实际入口会随平台变化。</figcaption></figure>
     </section>
 
     <section id="install">
       <div class="eyebrow">01 / SETUP</div><h2>安装与启动</h2>
-      <div class="note"><strong>Windows 用户推荐安装版：</strong>到 <a href="https://github.com/ichxjz/CreatorHub-KK-/releases/latest">最新正式版下载页</a>，在 Assets 下载 <code>CreatorHub-Setup-版本-windows-x64.exe</code>，双击安装后使用桌面快捷方式启动。无需手动安装 Python 或构建源码；缺少 WebView2 时安装器自动联网安装。点击“启动本地服务”后自动下载所需浏览器，等待就绪再打开工作台。升级前先“停止并退出”，再安装新版，数据保留。若尚无正式版本，请等待维护者发布；源码 ZIP 不是安装程序。</div>
+      <div class="note"><strong>Windows 用户推荐安装版：</strong>到 <a href="https://github.com/ichxjz/CreatorHub-KK-/releases/latest">最新正式版下载页</a>，在 Assets 下载 <code>CreatorHub-Setup-版本-windows-x64.exe</code>，双击安装后使用桌面快捷方式启动。无需手动安装 Python 或构建源码；缺少 WebView2 时安装器自动联网安装。启动后自动准备本地服务与浏览器组件，并直接进入增强版工作台；诊断和更新位于客户端菜单的“服务与更新”。升级前先“停止并退出”，再安装新版，数据保留。若尚无正式版本，请等待维护者发布；源码 ZIP 不是安装程序。</div>
       <details><summary>源码安装：开发者 / macOS / Linux（Windows 安装版用户跳过）</summary>
       <h3>准备什么？</h3>
       <ul><li>一台带桌面环境的 Windows、macOS 或 Linux 电脑，以及能正常访问对应平台的网络。</li><li>Python 3.10 或以上。Windows 安装 Python 时勾选 <code>Add Python to PATH</code>，安装后重新打开终端。</li><li>小红书用户建议准备本机稳定版 Google Chrome。首次安装会下载 Python 依赖和浏览器，请预留时间和磁盘空间。</li></ul>
-      <p>正常启动不需要先安装 Node.js，也不需要自行配置数据库。Node.js 仅用于前端开发构建或显式开启小红书 API 发布兼容模式等场景。</p>
+      <p>源码运行需安装 Node.js 24+，用于评论洞察分析；Windows 安装版已内置。数据库由程序自动创建。</p>
       <h3>第一步：下载项目</h3>
       <ol><li>打开 <a href="https://github.com/ichxjz/CreatorHub-KK-">GitHub 项目主页</a>。</li><li>点击 <strong>Code → Download ZIP</strong>，把压缩包完整解压到一个固定文件夹。不要在压缩包里直接启动。</li><li>打开解压后的文件夹，确认能看到 <code>start.cmd</code>、<code>start.sh</code> 和 <code>creatorhub.py</code>。</li></ol>
-      <details><summary>已经会用 Git？使用克隆方式</summary><pre><code>git clone https://github.com/ichxjz/CreatorHub-KK-.git
+      <details><summary>已经会用 Git？使用克隆方式</summary><pre><code>git clone https://github.com/ichxjz/CreatorHub-KK-.git creatorhub
 cd creatorhub</code></pre><p>克隆方式便于以后更新；ZIP 方式不要求安装 Git。</p></details>
       <h3>第二步：运行启动脚本</h3>
       <h4>Windows</h4>
@@ -100,7 +90,6 @@ cd creatorhub</code></pre><p>克隆方式便于以后更新；ZIP 方式不要�
       <div class="success"><strong>完成标志：</strong>账号出现在当前平台列表，状态检测正常，并能在创建任务时被选中。</div>
       <div class="note"><strong>小红书有两种登录用途：</strong>扫码获得主站读取态，用来读取内容；需要发布时还要完成独立的“创作者登录”。“能查看笔记”不代表“已经能发布”。</div>
       <p>若暂时看不到账号，先检查顶部平台是否选对。登录失效时从账号列表重新登录，不要为了修复登录删除整个数据目录。</p>
-      <figure><a href="images/accounts-list.png"><img src="images/accounts-list.png" alt="平台账号列表，展示账号搜索、登录状态和操作入口" width="1600" loading="lazy"></a><figcaption>先确认账号可用，再创建任务；代理池和浏览器内核属于进阶选项。</figcaption></figure>
     </section>
 
     <section id="first-task">
@@ -119,7 +108,6 @@ cd creatorhub</code></pre><p>克隆方式便于以后更新；ZIP 方式不要�
       <div class="note"><strong>为什么新建后没有旧作品？</strong>默认主要监控订阅后的新内容。历史回填与持续监控是两件事；没有新内容、尚未到检查时间、筛选过严，都可能导致暂时没有记录。</div>
       <p><strong>完成标志：</strong>目标出现在列表；执行后有检查状态，有符合条件的内容时出现在作品记录中。无需继续监控时，暂停目标，不要只关网页。</p>
       <p>作品、评论、弹幕监控的新建与编辑均支持秒级频率。选择“自定义”后输入数值，并选择“秒”或“分钟”；范围为 1–86400 秒，分钟允许小数但须换算为整秒（例如 1.5 分钟 = 90 秒）。切换单位保持实际间隔，弹幕仍可选择跟随全局设置。配置是期望间隔，实际执行还受任务耗时、错峰和账号限速影响。</p>
-      <figure><a href="images/monitor-create.png"><img src="images/monitor-create.png" alt="新建作品监控抽屉，包含目标、账号、检查频率与采集选项" width="1600" loading="lazy"></a><figcaption>先填目标和账号，再决定检查频率与是否下载，最后考虑高级选项。</figcaption></figure>
     </section>
 
     <section id="collection">
@@ -127,6 +115,16 @@ cd creatorhub</code></pre><p>克隆方式便于以后更新；ZIP 方式不要�
       <ol><li>输入关键词，一次最多 20 个。第一次先填 1 个容易理解的词，例如“摄影教程”。</li><li>选择可用账号，将每词作品数设为较小值，例如 5；不需要评论或媒体时关闭对应选项。</li><li>如需要评论，设置每作品评论数，并明确是否包含二级评论。数量代表上限，不保证达到该数量。</li><li>提交后查看任务进度和错误信息。等待本次采集结束，再检查结果和 Excel 导出。</li><li>需要继续采集时，可对已结束任务编辑配置并保留结果去重续跑，避免重复新建相同任务。</li></ol>
       <p><strong>完成标志：</strong>任务结束，有结果可查看或导出；数量少于上限不一定是故障，结果受平台排序、登录状态和当前可见内容影响。</p>
       <div class="note">这不是定时监控。小红书需要有效的主站登录态；选择“最新发布”后会按发布时间处理候选。“页面可见但详情媒体未读取到”可能是访问参数过期或页面结构变化，不等同于账号失效。</div>
+    </section>
+
+    <section id="insights">
+      <h2>洞察工作台与导出</h2><p class="path">入口：关键词采集 → 任务卡片下方“洞察工作台”</p>
+      <ol><li>选择已采集评论的任务，分析任务每页五张卡片，可直接切换或翻页。</li><li>查看评论统计、关键词、热评和用户需求；点击关键词或分类，联动查看对应评论。</li><li>评论每页十条，支持数字分页、收藏、备注、作者主页和原评论定位。</li><li>按当前筛选导出 Excel、CSV、JSON；飞书导出需先在界面配置自己的应用与目标多维表格。</li></ol>
+      <p>以下动图使用模拟数据，展示当前增强版界面；每张都保留 CreatorHub 和开发署名。</p>
+      <div class="demo-grid">
+        <figure><a href="images/03-keyword-drilldown.gif"><img src="images/03-keyword-drilldown.gif" alt="CreatorHub 多平台内容工作台·开发：KK-Tiong_Pavelio，关键词联动原评论演示" width="1200" height="900" loading="lazy"></a><figcaption>关键词联动原评论</figcaption></figure>
+        <figure><a href="images/10-feishu-setup.gif"><img src="images/10-feishu-setup.gif" alt="CreatorHub 多平台内容工作台·开发：KK-Tiong_Pavelio，飞书连接设置演示" width="1200" height="900" loading="lazy"></a><figcaption>飞书多维表格连接设置</figcaption></figure>
+      </div>
     </section>
 
     <section id="comments">
@@ -137,15 +135,13 @@ cd creatorhub</code></pre><p>克隆方式便于以后更新；ZIP 方式不要�
       <h3>弹幕监控（仅抖音短视频）</h3><p class="path">入口：切换到抖音 → 弹幕监控 → 新建弹幕监控</p>
       <ol><li>填写视频目标并选择账号；自己的视频使用创作中心来源，公开视频使用播放器来源。</li><li>设置视频内时间范围，按需添加关键词、文本长度、点赞数和容量上限。</li><li>保存并等待执行，到“弹幕记录”查看按视频时间点排列的结果。</li></ol>
       <p>弹幕时间是视频播放时间轴上的位置，不是评论发布时间，也不是直播弹幕。评论区有内容不代表视频中一定有弹幕。</p>
-      <figure><a href="images/monitor-comments.png"><img src="images/monitor-comments.png" alt="评论记录列表，包含来源任务与筛选条件" width="1600" loading="lazy"></a><figcaption>记录页用于看结果，监控目标页用于管理执行配置。</figcaption></figure>
     </section>
 
     <section id="download">
       <h2>链接下载：保存已知内容</h2><p class="path">入口：链接下载</p>
       <ol><li>从对应平台复制完整分享文案，不必手动删掉文案中的文字。</li><li>粘贴到输入框；按需选择账号、画质和下载选项，再提交。</li><li>查看下载历史或错误提示，成功后检查实际保存路径。</li></ol>
       <p>抖音支持画质选择，小红书支持图集与视频，快手支持内容下载；视频号暂不支持。下载有断点续传和失败重试机制，但链接失效或登录失效仍需要先修复原因。</p>
-      <p>高画质取决于平台实际提供的资源；“仅音频”、格式处理或音画合并出现问题时，先更新依赖，必要时检查 ffmpeg。命令行用户可参考 <a href="https://github.com/ichxjz/CreatorHub-KK-#分享链接命令行下载">README 命令行说明</a>。</p>
-      <figure><a href="images/share-download.png"><img src="images/share-download.png" alt="链接下载页面，包含分享内容输入和下载历史" width="1600" loading="lazy"></a><figcaption>只下载一次用链接下载，持续发现新作品用作品监控。</figcaption></figure>
+      <p>高画质取决于平台实际提供的资源；“仅音频”、格式处理或音画合并出现问题时，先更新依赖，必要时检查 ffmpeg。命令行用户可参考 <a href="https://github.com/ichxjz/CreatorHub-KK-/blob/main/USER_GUIDE.md#分享链接命令行下载">命令行说明</a>。</p>
     </section>
 
     <section id="publish">
@@ -154,7 +150,6 @@ cd creatorhub</code></pre><p>克隆方式便于以后更新；ZIP 方式不要�
       <div class="note"><strong>遇到“结果待确认”：</strong>先去平台检查是否已经发出。不要直接重复提交，以免重复发布。连接中断或缺少成功证据时，本地状态可能无法立即确认平台结果。</div>
       <h3>转发已下载内容</h3><p>项目支持已下载抖音作品转发到小红书或视频号、小红书作品转发到抖音。先完成下载，再在对应作品操作中进入转发，核对目标平台、账号和素材，修改文案后提交。不是所有平台都支持互相转发。</p>
       <p>定时及排队任务请保持本地服务运行，执行情况以记录和平台结果为准，不要把定时按钮当成云端托管承诺。</p>
-      <figure><a href="images/publish-workflow.png"><img src="images/publish-workflow.png" alt="内容发布编辑器与素材、文案预览" width="1600" loading="lazy"></a><figcaption>提交前确认三件事：发到哪里、用哪个账号、发什么内容。</figcaption></figure>
     </section>
 
     <section id="my-content">
@@ -163,7 +158,6 @@ cd creatorhub</code></pre><p>克隆方式便于以后更新；ZIP 方式不要�
       <h3>小红书私信自动回复</h3><p>在私信区域按需配置关键词、排除词、回复模板、冷却时间和消息最大年龄。默认生成待审核草稿，先检查命中对象和文案，再决定是否发送。首次启用只建立消息游标，不会处理全部历史积压。</p>
       <p>后台会低频检查新消息。发送使用账号自己的可见 Chrome 会话与页面输入框；浏览器默认可能最小化，需要查看时点击“打开浏览器收发”。提交结果不确定时，先核对会话再操作。</p>
       <h3>作品健康监控</h3><p>如当前账号页面提供健康监控，可按需开启零播放、违规或下架等提醒，并配置<a href="#notifications">通知渠道</a>。视频号在此管理自己的作品、数据与评论，不用于监控他人账号。</p>
-      <figure><a href="images/account-hub-dm.png"><img src="images/account-hub-dm.png" alt="我的内容页面中的私信会话工作区" width="1600" loading="lazy"></a><figcaption>发送和账号动作会对平台产生实际影响，先看清账号与会话对象。</figcaption></figure>
     </section>
 
     <section id="autocomment">
@@ -171,7 +165,6 @@ cd creatorhub</code></pre><p>克隆方式便于以后更新；ZIP 方式不要�
       <ol><li>选择执行账号与规则目标，按表单填写触发条件和评论模板。</li><li>新建规则默认关闭。先小范围试跑，检查模板、命中目标及生成的任务。</li><li>使用审核流程时，到“任务与审核”逐条检查内容；不合适的内容不要发送。</li><li>确认行为符合预期后再手动启用规则，并保持低频。</li><li>不需要时关闭规则，查看队列里是否还有待处理任务。</li></ol>
       <p>小红书默认页面发布并先人工审核；<code>manual</code> 模式只保存草稿。自动评论、私信和账号动作还受活跃时段、共享写入间隔、小时/每日上限及风险冷却约束。</p>
       <div class="note">“已启用”不等于“立刻发送”。规则、审核、队列和平台提交是不同阶段，排队原因请看<a href="#queue">任务队列与风控中心</a>。平台验证码或拒绝提示出现时，先处理提示，不要不断重试。</div>
-      <figure><a href="images/autocomment-rules.png"><img src="images/autocomment-rules.png" alt="自动评论规则列表，顶部可切换规则与任务审核" width="1600" loading="lazy"></a><figcaption>先检查规则与生成内容，再启用实际执行。</figcaption></figure>
     </section>
 
     <section id="notifications">

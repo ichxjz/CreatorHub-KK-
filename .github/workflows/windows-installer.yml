@@ -9,7 +9,7 @@ on:
       version:
         description: Numeric version, for example 0.2.0
         required: true
-        default: "0.2.0"
+        default: "0.4.4"
 
 concurrency:
   group: windows-installer-${{ github.ref }}

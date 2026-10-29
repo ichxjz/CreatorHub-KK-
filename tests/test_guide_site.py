@@ -10,7 +10,7 @@ import os
 from unittest.mock import patch
 from urllib.parse import unquote, urlsplit
 
-from preview.build_preview import ROOT, GUIDE, GUIDE_IMAGES, build, build_guide
+from preview.build_preview import ROOT, GUIDE, GUIDE_IMAGES, build, build_guide, build_public
 
 
 class Links(HTMLParser):
@@ -44,7 +44,7 @@ class GuideSiteTests(unittest.TestCase):
         required = {"welcome", "install", "accounts", "first-task", "monitor",
                     "collection", "comments", "download", "publish", "my-content",
                     "autocomment", "notifications", "queue", "settings", "backup",
-                    "faq", "help"}
+                    "faq", "help", "insights"}
         self.assertTrue(required.issubset(page.ids))
         for section in required:
             self.assertIn(f"#{section}", page.links)
@@ -73,7 +73,7 @@ class GuideSiteTests(unittest.TestCase):
     def test_public_docs_exclude_promotional_entries(self):
         for name in ('README.md', 'USER_GUIDE.md', 'guide/index.html'):
             text = (ROOT / name).read_text(encoding='utf-8')
-            for forbidden in ('assets/community/', 'assets/sponsors/', '#交流群', 'github.com/3441293738/creatorhub/releases'):
+            for forbidden in ('assets/community/', 'assets/sponsors/', '#交流群', 'github.com/3441293738/creatorhub/releases', 'assets/screenshots/', '在线预览', '在线体验'):
                 self.assertNotIn(forbidden, text)
         self.assertIn('https://github.com/ichxjz/CreatorHub-KK-/releases/latest', (ROOT / 'README.md').read_text())
 
@@ -101,6 +101,24 @@ class GuideSiteTests(unittest.TestCase):
                 self.assertTrue(resolved.is_file(), link)
             for private in ("data", "docs", "profiles", "logs", "config.yaml"):
                 self.assertFalse((target / private).exists())
+
+    def test_public_build_removes_interactive_demo_and_uses_branded_gifs(self):
+        output_root = ROOT / "_site"
+        output_root.mkdir(exist_ok=True)
+        with TemporaryDirectory(prefix="public-guide-test-", dir=output_root) as tmp:
+            target = Path(tmp) / "site"
+            build(target)
+            self.assertTrue((target / "demo-api.js").is_file())
+            build_public(target)
+            self.assertIn('url=./guide/', (target / "index.html").read_text())
+            self.assertFalse((target / "app.js").exists())
+            self.assertFalse((target / "demo-api.js").exists())
+            self.assertFalse(list(target.rglob("*.png")))
+            for name in GUIDE_IMAGES:
+                self.assertEqual((target / "guide/images" / name).read_bytes(),
+                                 (ROOT / "assets/kk" / name).read_bytes())
+            for page in (target / "guide").rglob("*.html"):
+                self.assertIn("多平台内容工作台·开发：KK-Tiong_Pavelio", page.read_text())
 
     def test_all_platform_page_links_and_anchors_resolve(self):
         with TemporaryDirectory() as tmp:

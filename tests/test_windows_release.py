@@ -54,10 +54,10 @@ class WindowsReleaseTests(unittest.TestCase):
         script = self.jobs['release']['steps'][-1]['run']
         self.assertIn('--notes-file RELEASE_NOTES.md', script)
         self.assertNotIn('--generate-notes', script)
-        self.assertIn('每天最多一次', release_notes(ROOT, '0.2.0'))
+        self.assertIn('增强版工作台', release_notes(ROOT, '0.4.4'))
 
     def test_initial_version_defaults_are_consistent(self):
-        version = '0.2.0'
+        version = '0.4.4'
         self.assertEqual(self.workflow['on']['workflow_dispatch']['inputs']['version']['default'], version)
         builder = (ROOT / 'desktop/build_windows.py').read_text(encoding='utf-8')
         installer = (ROOT / 'desktop/installer.iss').read_text(encoding='utf-8')

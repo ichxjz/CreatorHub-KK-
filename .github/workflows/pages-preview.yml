@@ -1,11 +1,11 @@
-name: Deploy online preview and guide
+name: Deploy public guide
 
 on:
   push:
     branches: [main]
     paths:
-      - "app/web/**"
-      - "assets/screenshots/**"
+      - "README.md"
+      - "assets/kk/**"
       - "guide/**"
       - "preview/**"
       - "tests/test_guide_site.py"
@@ -31,7 +31,7 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Validate public guide
         run: python -m unittest discover -s tests -p test_guide_site.py
-      - name: Build static demo and guide
+      - name: Build public guide
         run: python preview/build_preview.py _site
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4

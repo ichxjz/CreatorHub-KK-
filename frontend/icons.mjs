@@ -12,7 +12,7 @@ export const icons = {
   first: "chevrons-left", last: "chevrons-right", clock: "clock-3", hash: "hash",
   eye: "eye", "eye-off": "eye-off", card: "contact-round", "heart-up": "thumbs-up",
   folder: "folder-open", copy: "copy", external: "external-link", trash: "trash-2",
-  settings: "settings-2", overview: "panels-top-left", captions: "captions",
+  settings: "settings-2", overview: "panels-top-left", chart: "chart-no-axes-combined", captions: "captions",
   automation: "bot-message-square", library: "library", login: "log-in", qr: "qr-code",
   cookie: "key-round", fingerprint: "fingerprint", network: "network", globe: "globe",
   alert: "circle-alert", offline: "wifi-off", chevron: "chevron-down", edit: "square-pen",

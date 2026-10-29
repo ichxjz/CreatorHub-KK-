@@ -5,3 +5,5 @@ CreatorHub KK is maintained by KK-Tiong_Pavelio. Its initial application code is
 KK additions include local comment insights, task navigation, relevance filters, comment location, account synchronization and Windows packaging changes.
 
 Third-party notices are preserved in app/web/workbench-licenses.txt, desktop/languages/, frontend/licenses/ and bundled runtime licenses. Node.js LICENSE accompanies Windows installers.
+
+Implementation reference for Xiaohongshu API support: Spider_XHS (https://github.com/cv-cat/Spider_XHS). Browser automation dependency: Patchright (https://github.com/Kaliiiiiiiiii-Vinyzu/patchright). Their authorship and applicable notices are retained.

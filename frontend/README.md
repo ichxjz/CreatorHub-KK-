@@ -35,24 +35,17 @@ python -m pytest tests/test_web_appearance_browser.py tests/test_workbench_secti
 
 浏览器写操作使用隔离的示例接口，不操作真实账号。
 
-## 界面预览维护
+## 功能演示素材
 
-调整 UI 后，同步更新 README 的截图（需已安装项目 Python 依赖和 Chrome）：
+公开动图使用 `assets/kk/` 中的品牌版本，保留 CreatorHub 与“多平台内容工作台·开发：KK-Tiong_Pavelio”标识；README 每行两张。仅使用模拟数据，不录入账号、Cookie 和真实采集内容。
 
-```bash
-npm run build:ui
-python -m preview.capture_screenshots
-```
+本地 UI 回归可运行 `python -m preview.capture_screenshots`，结果保存在被 Git 忽略的 `artifacts/screenshots/`。这些检查截图不发布到项目首页。
 
-截图直接使用 `app/web/` 的当前构建产物，在临时静态站点和独立的无头浏览器中完成，不启动后端、不读取真实账号，并阻断外部及未被演示接口接管的 API 请求。图片统一宽 1600 像素，长页面完整截图，抽屉保留视口尺寸；全部场景成功后才更新 `assets/screenshots/`。
-
-演示时间固定在 `preview/capture_screenshots.py` 的 `CAPTURE_TIME`，发布预览使用 `preview/fixtures/publish-cover.svg`。新增截图时同步维护 `SCENES` 和 README 的图片入口。
-
-在线演示由 `preview/build_preview.py` 复用相同界面资源；提交到 `main` 后由 `.github/workflows/pages-preview.yml` 更新 GitHub Pages。
+GitHub Pages 只发布使用指南；本地模拟接口与截图工具保留用于开发验证。
 
 ## 依赖许可证
 
 组件使用 shadcn/ui 的组合方式及 Radix primitives，通用图标使用 Lucide。运行时不依赖 CDN 或远程字体。
 
 `app/web/workbench.js.LEGAL.txt` 和 `app/web/workbench-licenses.txt` 为构建依赖的许可证文件，需与构建产物一起保留。
-`licenses/react-remove-scroll-bar.txt` 补充上游 npm 包中缺失的许可证。
+`licenses/react-remove-scroll-bar.txt` 补充对应 npm 包中缺失的许可证。

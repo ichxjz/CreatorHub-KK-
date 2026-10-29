@@ -1,33 +1,14 @@
-# CreatorHub
+# CreatorHub 使用指南
+
+多平台内容工作台·开发：[KK-Tiong_Pavelio](https://ichxjz.com)
 
 > 本地运行的多平台内容管理面板，支持 **抖音 / 小红书 / 快手 / 视频号**。
 
-[新手使用指南](https://ichxjz.github.io/CreatorHub-KK-/guide/) · [在线预览](https://ichxjz.github.io/CreatorHub-KK-/) · [快速开始](#快速开始) · [平台能力](#平台能力) · [基本使用](#基本使用) · [配置](#配置) · [常见问题](#常见问题)
-
-> 在线预览由 GitHub Pages 提供，使用脱敏示例数据，仅展示界面与交互；登录、抓取、下载和发布仍需在本地运行。
+[新手使用指南](https://ichxjz.github.io/CreatorHub-KK-/guide/) · [快速开始](#快速开始) · [平台能力](README.md#平台能力) · [基本使用](#基本使用) · [配置](#配置) · [常见问题](#常见问题)
 
 CreatorHub 使用 Python + FastAPI 提供统一 Web 界面，用于管理账号、监控作品与评论、下载内容、发布作品和接收通知。账号登录态、数据库及媒体文件均保存在本地。
 
 浏览器交互按平台使用系统 Chrome CDP 或免费开源的 [Patchright](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright)，业务层统一使用兼容的 Playwright API。每个账号使用独立的浏览器 Profile，Cookie、缓存和本地存储互不共享。
-
-小红书API能力相关实现参考 [Spider_XHS](https://github.com/cv-cat/Spider_XHS)。
-
-## 平台能力
-
-| 功能 | 抖音 | 小红书 | 快手 | 视频号 |
-|---|:---:|:---:|:---:|:---:|
-| 登录 | 扫码 / 创作者 / Cookie | 扫码 / 创作者 | 扫码 / 创作者 | 扫码 |
-| 关键词批量采集 | ✅ 作品 / 评论 / 媒体 | ✅ 笔记 / 评论 / 媒体 | — | — |
-| 作品监控 | ✅ | ✅ 创作者 / 关键词 | ✅ | 仅本账号 |
-| 评论监控 | ✅ | ✅ | ✅ | 仅本账号 |
-| 短视频弹幕监控 | ✅ 播放页 / 创作中心 | — | — | — |
-| 内容下载 | ✅ 可选画质 | ✅ 图集 / 视频 | ✅ | — |
-| 发布 | ✅ | ✅ | ✅ | ✅ |
-| 自动评论 / 回复 | ✅ | ✅ | ✅ | — |
-| 本账号管理 | 作品 / 关注 / 粉丝 / 私信 | 作品 / 关注 / 粉丝 / 私信 | 作品 / 关注 / 粉丝 | 作品 / 数据 / 评论 |
-| 通知 | Bark / 钉钉 / Telegram | Bark / 钉钉 / Telegram | Bark / 钉钉 / Telegram | Bark / 钉钉 / Telegram |
-
-> 视频号只支持创作者助手中的本账号数据，不支持监控或下载他人作品。
 
 ## 快速开始
 
@@ -35,9 +16,9 @@ CreatorHub 使用 Python + FastAPI 提供统一 Web 界面，用于管理账号�
 
 1. 打开 **[Windows 安装包下载页](https://github.com/ichxjz/CreatorHub-KK-/releases/latest)**，在 Assets 中下载 `CreatorHub-Setup-版本-windows-x64.exe`。
 2. 双击安装，使用桌面快捷方式启动。无需自行安装 Python、运行构建命令或下载源码；缺少 WebView2 时安装器会自动联网安装。
-3. 点击“启动本地服务”。首次会自动下载浏览器组件，就绪后打开工作台并登录账号。
+3. 启动后自动准备本地服务并进入工作台。首次会下载浏览器组件，准备完成后登录账号；诊断和更新位于客户端菜单的“服务与更新”。
 
-适用于 Windows 10/11 x64。安装与首次启动请保持联网。从 v0.2.0 起，安装版默认每天后台检查一次新版本，只提醒、不自动下载。看到提醒后点“一键更新”，下载完成后确认“安装并重启”即可；也可在“偏好设置 → 版本与更新”中关闭自动检查或手动更新。下载支持增量优先、完整包兜底及断点续传，更新保留用户数据。尚无一键更新入口的旧版先“停止并退出”，再手动运行新版安装包。`Source code (zip)` 是源码，不是安装包。
+适用于 Windows 10/11 x64。安装与首次启动请保持联网。安装版默认每天后台检查一次新版本，只提醒、不自动下载。看到提醒后点“一键更新”，下载完成后确认“安装并重启”即可；也可在“偏好设置 → 版本与更新”中关闭自动检查或手动更新。下载支持增量优先、完整包兜底及断点续传，更新保留用户数据。尚无一键更新入口的旧版先“停止并退出”，再手动运行新版安装包。`Source code (zip)` 是源码，不是安装包。
 
 第一次使用？先看 **[图文上手指南](https://ichxjz.github.io/CreatorHub-KK-/guide/)**：从 ZIP 下载、安装启动、账号登录到完成第一个任务，再按需查看各功能操作与常见问题。文档源码和维护方式见 [`guide/`](guide/README.md)，随现有 GitHub Pages 工作流发布。
 
@@ -50,7 +31,7 @@ Windows 安装版用户跳过以下环境安装与命令。
 - Python 3.10+
 - 桌面环境（扫码登录时需要弹出浏览器）
 - Google Chrome 稳定版（可选，但小红书扫码登录建议安装）
-- Node.js 18+（仅启用小红书 `api` 发布兼容模式时需要）
+- Node.js 24+（评论洞察分析必需；Windows 安装版已内置）
 - 系统 ffmpeg（可选；未安装时自动使用 Python 依赖附带的 ffmpeg）
 
 ### 一键启动
@@ -58,7 +39,7 @@ Windows 安装版用户跳过以下环境安装与命令。
 克隆项目：
 
 ```bash
-git clone https://github.com/ichxjz/CreatorHub-KK-.git
+git clone https://github.com/ichxjz/CreatorHub-KK-.git creatorhub
 cd creatorhub
 ```
 
@@ -122,39 +103,6 @@ npm install
 ```
 
 </details>
-
-## 界面预览
-
-> 截图使用本地示例数据，展示新版工作台的分栏列表、配置抽屉与发布预览。浅色 / 深色主题独立切换，品牌配色随平台变化。
-
-![工作概览 · 抖音深色主题](assets/screenshots/overview-douyin.png)
-
-### 更多界面
-
-> 截图宽度统一为 1600 像素，长页面保留完整内容；点击可查看高清原图。
-
-<table>
-  <tr>
-    <td width="50%" align="center" valign="top"><strong>小红书浅色主题</strong><br><a href="assets/screenshots/overview-xiaohongshu.png"><img src="assets/screenshots/overview-xiaohongshu.png" alt="小红书工作概览与任务状态" width="100%"></a></td>
-    <td width="50%" align="center" valign="top"><strong>平台账号</strong><br><a href="assets/screenshots/accounts-list.png"><img src="assets/screenshots/accounts-list.png" alt="账号列表、搜索与操作入口" width="100%"></a></td>
-  </tr>
-  <tr>
-    <td width="50%" align="center" valign="top"><strong>代理池</strong><br><a href="assets/screenshots/accounts-proxy.png"><img src="assets/screenshots/accounts-proxy.png" alt="独立代理池标签与账号关联" width="100%"></a></td>
-    <td width="50%" align="center" valign="top"><strong>新建监控抽屉</strong><br><a href="assets/screenshots/monitor-create.png"><img src="assets/screenshots/monitor-create.png" alt="侧边抽屉配置作品监控与采集策略" width="100%"></a></td>
-  </tr>
-  <tr>
-    <td width="50%" align="center" valign="top"><strong>作品记录</strong><br><a href="assets/screenshots/monitor-posts.png"><img src="assets/screenshots/monitor-posts.png" alt="作品记录、来源任务与抓取时间筛选" width="100%"></a></td>
-    <td width="50%" align="center" valign="top"><strong>评论记录</strong><br><a href="assets/screenshots/monitor-comments.png"><img src="assets/screenshots/monitor-comments.png" alt="评论记录与来源任务溯源" width="100%"></a></td>
-  </tr>
-  <tr>
-    <td width="50%" align="center" valign="top"><strong>内容发布与预览</strong><br><a href="assets/screenshots/publish-workflow.png"><img src="assets/screenshots/publish-workflow.png" alt="发布编辑器与素材、文案实时预览" width="100%"></a></td>
-    <td width="50%" align="center" valign="top"><strong>链接下载</strong><br><a href="assets/screenshots/share-download.png"><img src="assets/screenshots/share-download.png" alt="分享链接解析与下载历史" width="100%"></a></td>
-  </tr>
-  <tr>
-    <td width="50%" align="center" valign="top"><strong>自动评论</strong><br><a href="assets/screenshots/autocomment-rules.png"><img src="assets/screenshots/autocomment-rules.png" alt="评论规则列表与独立审核标签" width="100%"></a></td>
-    <td width="50%" align="center" valign="top"><strong>我的内容与私信</strong><br><a href="assets/screenshots/account-hub-dm.png"><img src="assets/screenshots/account-hub-dm.png" alt="我的内容工作区与私信会话" width="100%"></a></td>
-  </tr>
-</table>
 
 ## 基本使用
 
@@ -226,7 +174,7 @@ CreatorHub 管理，不需要外部商业浏览器或云端账号。小红书始
 第三方指纹内核与既有 Profile 混用容易造成 UA/Client Hints、GPU 和站点持久状态不一致，
 从而增加设备安全验证；后端、登录接口和账号设置页都会拒绝该组合。
 
-1. 从上游 Release 下载适合当前系统的构建并自行校验文件。
+1. 从该浏览器项目的 Release 下载适合当前系统的构建并自行校验文件。
 2. 在账号页的「浏览器内核」区域扫描安装目录，或手动添加当前机器上的
    `chrome.exe` / `chrome`。每台机器单独保存本机路径，不依赖固定盘符。
 3. 也可以在 `config.yaml` 中配置单个内核或多内核扫描根目录：
@@ -252,7 +200,7 @@ engine:
 
 该后端使用账号现有 `fp_seed` 生成稳定的 32 位内核指纹种子，并由浏览器内核
 统一处理 UA/Client Hints、Canvas、Audio、WebGL、语言和时区；CreatorHub 不会
-再叠加 `legacy` JavaScript 指纹脚本。默认强制使用有头窗口，因为上游说明无头模式
+再叠加 `legacy` JavaScript 指纹脚本。默认强制使用有头窗口，因为该内核的无头模式
 只处理了部分无头特征。切换已有账号的浏览器环境会改变其设备画像，建议切换后重新
 检查登录态和代理出口。小红书登录和后续任务不会进入该分支，也不会在出现设备验证时
 自动刷新、跳转或重试；验证页会保留在可见系统 Chrome 窗口中供账号本人完成，期间
@@ -264,7 +212,7 @@ IP、时区、WebRTC 与浏览器指纹。账号页的「环境检测」可以�
 “已提示”只表示检测页已打开，不代表目标平台风控一定通过。BrowserScan 是第三方站点，
 会看到该环境的出口 IP 和浏览器特征。
 
-项目不捆绑上游浏览器二进制；升级浏览器时请先备份 `data/profiles/` 并在测试账号上
+项目不捆绑该可选浏览器的二进制；升级浏览器时请先备份 `data/profiles/` 并在测试账号上
 验证兼容性。
 
 ## 任务队列与平台风控
