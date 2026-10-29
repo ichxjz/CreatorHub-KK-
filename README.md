@@ -14,73 +14,34 @@
 
 ## 功能演示（模拟数据）
 
-![分析任务：一行五卡、切换与分页](assets/kk/task-cards.gif)
+每行两张，点击动图查看大图。使用真实界面与模拟数据录制，不包含用户账号或采集记录。
 
-![桌面到手机的自适应布局](assets/kk/responsive.gif)
-
-### 十项功能操作演示
-
-使用真实界面与模拟数据录制；不包含用户账号、采集记录或对外发送。
-
-<details><summary>1. 任务快速切换</summary>
-
-![任务快速切换](assets/kk/01-task-switch.gif)
-
-</details>
-
-<details><summary>2. 任务卡片分页</summary>
-
-![任务卡片分页](assets/kk/02-task-pages.gif)
-
-</details>
-
-<details><summary>3. 关键词查看原评论</summary>
-
-![关键词查看原评论](assets/kk/03-keyword-drilldown.gif)
-
-</details>
-
-<details><summary>4. 需求分类筛选</summary>
-
-![需求分类筛选](assets/kk/04-needs.gif)
-
-</details>
-
-<details><summary>5. 评论搜索</summary>
-
-![评论搜索](assets/kk/05-comment-search.gif)
-
-</details>
-
-<details><summary>6. 收藏与跟进</summary>
-
-![收藏与跟进](assets/kk/06-favorites.gif)
-
-</details>
-
-<details><summary>7. 评论数字分页</summary>
-
-![评论数字分页](assets/kk/07-comment-pages.gif)
-
-</details>
-
-<details><summary>8. 上下文与备注</summary>
-
-![上下文与备注](assets/kk/08-context-notes.gif)
-
-</details>
-
-<details><summary>9. 分析设置</summary>
-
-![分析设置](assets/kk/09-analysis-options.gif)
-
-</details>
-
-<details><summary>10. 飞书连接设置</summary>
-
-![飞书连接设置](assets/kk/10-feishu-setup.gif)
-
-</details>
+<table>
+<tr>
+<td width="50%" align="center"><strong>分析任务卡片</strong><br><a href="assets/kk/task-cards.gif"><img src="assets/kk/task-cards.gif" alt="CreatorHub · 分析任务卡片 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+<td width="50%" align="center"><strong>自适应布局</strong><br><a href="assets/kk/responsive.gif"><img src="assets/kk/responsive.gif" alt="CreatorHub · 自适应布局 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+</tr>
+<tr>
+<td width="50%" align="center"><strong>任务快速切换</strong><br><a href="assets/kk/01-task-switch.gif"><img src="assets/kk/01-task-switch.gif" alt="CreatorHub · 任务快速切换 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+<td width="50%" align="center"><strong>任务卡片分页</strong><br><a href="assets/kk/02-task-pages.gif"><img src="assets/kk/02-task-pages.gif" alt="CreatorHub · 任务卡片分页 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+</tr>
+<tr>
+<td width="50%" align="center"><strong>关键词查看原评论</strong><br><a href="assets/kk/03-keyword-drilldown.gif"><img src="assets/kk/03-keyword-drilldown.gif" alt="CreatorHub · 关键词查看原评论 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+<td width="50%" align="center"><strong>需求分类筛选</strong><br><a href="assets/kk/04-needs.gif"><img src="assets/kk/04-needs.gif" alt="CreatorHub · 需求分类筛选 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+</tr>
+<tr>
+<td width="50%" align="center"><strong>评论搜索</strong><br><a href="assets/kk/05-comment-search.gif"><img src="assets/kk/05-comment-search.gif" alt="CreatorHub · 评论搜索 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+<td width="50%" align="center"><strong>收藏与跟进</strong><br><a href="assets/kk/06-favorites.gif"><img src="assets/kk/06-favorites.gif" alt="CreatorHub · 收藏与跟进 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+</tr>
+<tr>
+<td width="50%" align="center"><strong>评论数字分页</strong><br><a href="assets/kk/07-comment-pages.gif"><img src="assets/kk/07-comment-pages.gif" alt="CreatorHub · 评论数字分页 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+<td width="50%" align="center"><strong>上下文与备注</strong><br><a href="assets/kk/08-context-notes.gif"><img src="assets/kk/08-context-notes.gif" alt="CreatorHub · 上下文与备注 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+</tr>
+<tr>
+<td width="50%" align="center"><strong>分析设置</strong><br><a href="assets/kk/09-analysis-options.gif"><img src="assets/kk/09-analysis-options.gif" alt="CreatorHub · 分析设置 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+<td width="50%" align="center"><strong>飞书连接设置</strong><br><a href="assets/kk/10-feishu-setup.gif"><img src="assets/kk/10-feishu-setup.gif" alt="CreatorHub · 飞书连接设置 · 开发 KK-Tiong_Pavelio" width="100%"></a></td>
+</tr>
+</table>
 
 ## KK 新增与修改
 
