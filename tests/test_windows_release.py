@@ -44,7 +44,8 @@ class WindowsReleaseTests(unittest.TestCase):
 
     def test_chinese_notes_are_validated_before_build_and_used_for_release(self):
         from desktop.release import release_notes
-        steps = self.jobs['windows']['steps']
+        self.assertEqual(self.jobs['windows']['needs'], 'regression')
+        steps = self.jobs['regression']['steps'] + self.jobs['windows']['steps']
         names = [s.get('name', s.get('uses')) for s in steps]
         self.assertLess(names.index('Prepare Chinese release notes'), names.index('Build desktop renderer'))
         notes = next(s for s in steps if s.get('name') == 'Prepare Chinese release notes')
@@ -75,7 +76,8 @@ class WindowsReleaseTests(unittest.TestCase):
         self.assertEqual(result.stdout.decode('utf-8').splitlines(), ['中文发布说明', '1'])
 
     def test_build_order_and_checksums(self):
-        steps = self.jobs['windows']['steps']
+        self.assertEqual(self.jobs['windows']['needs'], 'regression')
+        steps = self.jobs['regression']['steps'] + self.jobs['windows']['steps']
         names = [s.get('name', s.get('uses')) for s in steps]
         self.assertLess(names.index('Test database upgrades and large follow lists'),
                         names.index('Package Python, application and offline guide'))
@@ -90,7 +92,8 @@ class WindowsReleaseTests(unittest.TestCase):
         self.assertEqual(upload['with']['name'], download['with']['name'])
 
     def test_monitor_changes_reach_the_frozen_client(self):
-        steps = self.jobs['windows']['steps']
+        self.assertEqual(self.jobs['windows']['needs'], 'regression')
+        steps = self.jobs['regression']['steps'] + self.jobs['windows']['steps']
         names = [s.get('name', s.get('uses')) for s in steps]
         render = next(s for s in steps if s.get('name') == 'Build desktop renderer')['run']
         self.assertLess(render.index('npm ci'), render.index('npm run build:ui'))
@@ -122,7 +125,8 @@ class WindowsReleaseTests(unittest.TestCase):
         self.assertIn('CreatorHub-Setup-$APP_VERSION-windows-x64.exe', script)
 
     def test_account_health_download_and_collection_regressions_gate_packaging(self):
-        steps = self.jobs['windows']['steps']
+        self.assertEqual(self.jobs['windows']['needs'], 'regression')
+        steps = self.jobs['regression']['steps'] + self.jobs['windows']['steps']
         names = [step.get('name', step.get('uses')) for step in steps]
         gate = 'Test account health, Douyin requests and collection exports'
         self.assertLess(names.index(gate), names.index('Package Python, application and offline guide'))

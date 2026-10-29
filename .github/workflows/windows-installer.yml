@@ -19,13 +19,40 @@ permissions:
   contents: read
 
 jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONUTF8: "1"
+      PYTEST_ADDOPTS: "-o faulthandler_timeout=60"
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install regression dependencies
+        run: python -m pip install -r requirements.txt pytest
+      - name: Test release helper
+        run: python -m pytest tests/test_desktop_release.py tests/test_windows_release.py -q
+      - name: Test database upgrades and large follow lists
+        run: python -m pytest tests/test_follow_sync.py -q
+      - name: Test monitor API and frontend contracts
+        run: python -m pytest tests/test_monitor_accounts.py tests/test_monitor_intervals.py tests/test_engine_settings.py tests/test_web_optimizations.py -q
+      - name: Test account health, Douyin requests and collection exports
+        run: python -m pytest tests/test_account_auth_health.py tests/test_douyin_login.py tests/test_douyin_api_session.py tests/test_douyin_web_request_signing.py tests/test_douyin_share_download.py tests/test_douyin_task_browser_cleanup.py tests/test_douyin_comment_sec_uid.py tests/test_keyword_collection.py tests/test_share_downloader.py tests/test_reporting.py tests/test_monitor_metadata.py tests/test_transport_matrix.py tests/test_write_gates.py -q
+
   windows:
+    needs: regression
     runs-on: windows-latest
     timeout-minutes: 45
     env:
       # 确保英文 Windows 构建机也能输出中文说明，并保持子进程编码一致。
       PYTHONUTF8: "1"
       PYTHONIOENCODING: "utf-8"
+      PYTEST_ADDOPTS: "-o faulthandler_timeout=60"
     outputs:
       version: ${{ steps.version.outputs.value }}
     steps:
@@ -60,14 +87,6 @@ jobs:
           npm run build:desktop
       - name: Install build dependencies
         run: python -m pip install -r requirements.txt -r desktop/requirements-build.txt pytest -c desktop/constraints-windows.txt
-      - name: Test release helper
-        run: python -m pytest tests/test_desktop_release.py tests/test_windows_release.py -q
-      - name: Test database upgrades and large follow lists
-        run: python -m pytest tests/test_follow_sync.py -q
-      - name: Test monitor API and frontend contracts
-        run: python -m pytest tests/test_monitor_accounts.py tests/test_monitor_intervals.py tests/test_engine_settings.py tests/test_web_optimizations.py -q
-      - name: Test account health, Douyin requests and collection exports
-        run: python -m pytest tests/test_account_auth_health.py tests/test_douyin_login.py tests/test_douyin_api_session.py tests/test_douyin_web_request_signing.py tests/test_douyin_share_download.py tests/test_douyin_task_browser_cleanup.py tests/test_douyin_comment_sec_uid.py tests/test_keyword_collection.py tests/test_share_downloader.py tests/test_reporting.py tests/test_monitor_metadata.py tests/test_transport_matrix.py tests/test_write_gates.py -q
       - name: Test KK extensions
         run: python -m unittest discover -s tests_kk -p "test_*.py" -q
       - name: Test Feishu adapter

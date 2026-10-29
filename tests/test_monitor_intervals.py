@@ -135,7 +135,11 @@ def test_fast_polling_does_not_speed_up_maintenance_or_write_queues(local_projec
     engine = MonitorEngine(local_project.cfg, local_project.browser)
     engine._running = True
     clock = [0.0]
-    monkeypatch.setattr(monitor.time, "monotonic", lambda: clock[0])
+    # Replacing time.monotonic on the shared stdlib module also freezes the
+    # Windows event loop's shutdown clock. Fake only the scheduler's clock.
+    scheduler_time = SimpleNamespace(**vars(monitor.time))
+    scheduler_time.monotonic = lambda: clock[0]
+    monkeypatch.setattr(monitor, "time", scheduler_time)
     monkeypatch.setattr(engine, "_monitor_poll_seconds", lambda: 1)
     engine._prune_risk_events_if_due = Mock()
     for name in ("_collect_idle_browser_sessions", "_scan_once", "_scan_comment_watches",
