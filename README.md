@@ -65,7 +65,7 @@
 需 Python 3.12、Node.js 24+、Git、系统 Chrome。安装依赖后按[使用指南](USER_GUIDE.md)启动：
 
 ```sh
-git clone https://github.com/ichxjz/CreatorHub-KK-.git
+git clone https://github.com/ichxjz/CreatorHub-KK-.git creatorhub
 cd creatorhub
 python -m venv .venv
 # Windows: .venv\Scripts\activate

@@ -1,5 +1,7 @@
 """Exercise both native renderers and the real isolated workbench service."""
+import os
 import tempfile
+import traceback
 import threading
 import time
 from pathlib import Path
@@ -13,6 +15,12 @@ def smoke():
     from desktop.workbench_window import WorkbenchWindow
 
     failures = []
+    evidence = Path(os.environ.get("CREATORHUB_DESKTOP_HOME", tempfile.gettempdir())) / "logs"
+    evidence.mkdir(parents=True, exist_ok=True)
+    def mark(message):
+        with (evidence / "native-smoke.log").open("a", encoding="utf-8") as log:
+            log.write(message + "\n")
+    mark("START native WebView2 verification")
     with tempfile.TemporaryDirectory(prefix="creatorhub-webview-") as temp:
         home = Path(temp)
         prepare_home(home)
@@ -21,7 +29,7 @@ def smoke():
         threading.Thread(target=server.serve_forever, daemon=True).start()
         window = webview.create_window("CreatorHub renderer test", server.origin, hidden=True)
         allow_close = threading.Event()
-        workspace = WorkbenchWindow(webview, controller, window, lambda: False, allow_close)
+        workspace = WorkbenchWindow(webview, controller, window, lambda: allow_close.is_set(), allow_close)
         controller.open_workbench = workspace.open
         controller.show_manager = workspace.show_manager
 
@@ -35,6 +43,7 @@ def smoke():
                     time.sleep(.3)
                 else:
                     raise AssertionError("Desktop renderer did not load real stopped state: " + result)
+                mark("PASS manager renderer ready")
                 window.evaluate_js("location.hash = '#/settings'")
                 time.sleep(1)
                 assert "跟随系统" in window.evaluate_js("document.body.innerText")
@@ -43,6 +52,7 @@ def smoke():
                 # Start exactly as the EXE does: the real controller opens the
                 # owned service inside a second native window, not a browser.
                 controller.preferences["open_on_ready"] = False
+                mark("START isolated workbench service")
                 controller.start()
                 deadline = time.monotonic() + 60
                 while time.monotonic() < deadline:
@@ -53,6 +63,7 @@ def smoke():
                     time.sleep(.25)
                 else:
                     raise AssertionError("Native modified workbench did not load: " + controller.phase)
+                mark("PASS native workbench loaded with KK branding")
                 client = workspace.window
                 client.evaluate_js("document.querySelector('[aria-label=\"关闭新手向导\"]')?.click()")
                 assert client.evaluate_js("typeof window.openInsightWorkspace") == "function"
@@ -64,18 +75,23 @@ def smoke():
                     time.sleep(.2)
                 else:
                     raise AssertionError("Native insights entry did not open")
+                mark("PASS insights workspace opened")
                 workspace.show_manager()
                 controller.action("open_panel", {})
                 assert workspace.window is client
+                mark("PASS manager return retained the workbench window")
                 controller.stop()
                 controller.worker.join(timeout=40)
                 assert controller.phase == "stopped", controller.phase
+                mark("PASS service stopped")
             except Exception as exc:
                 failures.append(str(exc))
+                mark(traceback.format_exc())
             finally:
                 controller.stop()
                 if controller.worker:
                     controller.worker.join(timeout=40)
+                mark("CLOSE native windows")
                 allow_close.set()
                 workspace.destroy()
 
@@ -86,5 +102,6 @@ def smoke():
             server.server_close()
     if failures:
         raise AssertionError("; ".join(failures))
+    mark("PASS native WebView2 workbench, insights, manager return and service shutdown")
     print("PASS native WebView2 workbench, insights, manager return and service shutdown")
     return 0
