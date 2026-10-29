@@ -1,5 +1,10 @@
 # Independent releases
 
+## [0.4.1] - 2026-10-28
+
+- Make concurrency verification event-driven on Windows while retaining slot and automatic refill assertions.
+- Includes the complete independent 0.4 release features and ten new GIF demos.
+
 ## [0.4.0] - 2026-10-28
 
 - Publish independently maintained CreatorHub KK with dedicated Windows releases.

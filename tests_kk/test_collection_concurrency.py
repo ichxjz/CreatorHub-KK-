@@ -18,16 +18,22 @@ class ConcurrencyTest(unittest.IsolatedAsyncioTestCase):
     locks={};e.browser=SimpleNamespace(lock_for=lambda k:locks.setdefault(k,asyncio.Lock()))
     e.risk=SimpleNamespace(preflight=lambda *a:SimpleNamespace(allowed=True))
     events={id:asyncio.Event() for id in range(1,14)};started=[]
+    started_events={id:asyncio.Event() for id in range(1,14)}
     async def run(id):
      started.append(id)
+     started_events[id].set()
      await events[id].wait()
      with Session(db._engine) as s:
       j=s.get(KeywordCollectionJob,id);j.status='done';s.add(j);s.commit()
     e.run_collection_job=run
-    await e._process_collection_jobs();await asyncio.sleep(.01)
+    await e._process_collection_jobs()
+    await asyncio.wait_for(asyncio.gather(*(started_events[id].wait() for id in [1,2,3,4,5,7,8,9,10,11])),timeout=10)
     self.assertEqual(len(started),10);self.assertNotIn(6,started);self.assertNotIn(12,started)
     self.assertFalse(e.enqueue_collection_job(1))
-    events[1].set();await asyncio.sleep(.05)
+    events[1].set()
+    # Await the completion callback, not a 50ms timer that races Windows I/O.
+    # No manual scheduler tick is called: automatic refill is still required.
+    await asyncio.wait_for(started_events[6].wait(),timeout=10)
     self.assertIn(6,started);self.assertNotIn(13,started)
     e._running=False
     for t in e._collection_tasks.values():t.cancel()
