@@ -21,7 +21,7 @@ export function Onboarding({ platform }) {
   const [selected, setSelected] = useState(platforms[platform] ? platform : "douyin");
   const [step, setStep] = useState(0);
   const current = platforms[selected];
-  const guideBase = document.documentElement.dataset.guideBase || "https://ichxjz.github.io/creatorhub/guide/";
+  const guideBase = document.documentElement.dataset.guideBase || "https://ichxjz.github.io/CreatorHub-KK-/guide/";
   const demo = document.documentElement.dataset.preview === "true";
   function persist(next) {
     setSaved(next);

@@ -1,6 +1,6 @@
 # Windows 桌面分发
 
-桌面启动中心使用独立 React + Radix UI 界面，由 WebView2 原生窗口承载。不修改原 Web 工作台，也不替换 `start.cmd` / `start.sh`。
+Windows 默认在 WebView2 客户端窗口中打开与网页修改版相同的完整工作台。服务与更新管理页保留在客户端菜单中，使用独立的本地控制地址。
 
 ## 普通用户
 
@@ -8,13 +8,13 @@
 
 1. 安装已发布的 `CreatorHub-Setup-版本-windows-x64.exe`，通过桌面快捷方式启动。
 2. 无需自行安装 Python。安装器检测 Microsoft Edge WebView2 Runtime，缺少时自动通过随包附带的微软引导程序联网安装；失败会提示重试，不继续启动应用。首次点击“启动本地服务”会自动下载 Patchright Chromium；小红书建议安装系统 Chrome。
-3. 打开桌面版只显示启动中心，不启动后台服务、不下载浏览器、不执行任务。点击“启动本地服务”后再等待就绪；是否自动打开工作台由偏好设置控制。端口 8000 被占用时自动换用空闲端口。
+3. 双击桌面版自动启动本地服务，完成浏览器组件准备后直接进入工作台。端口 8000 被占用时自动换用空闲端口。服务启动失败时显示管理页供重试；`--no-autostart` 可仅打开管理页。
 4. 使用“新手向导”选择平台，按登录 → 第一个任务完成操作。
 5. 可最小化到托盘；关闭网页不停止任务。“停止并退出”或关闭管理窗口会确认并停止服务。
 
-从 [最新正式版](https://github.com/ichxjz/creatorhub/releases/latest) 的 Assets 下载安装包。仓库 ZIP 是源码，不是安装包。
+从 [最新正式版](https://github.com/ichxjz/CreatorHub-KK-/releases/latest) 的 Assets 下载安装包。仓库 ZIP 是源码，不是安装包。
 
-数据位于 `%LOCALAPPDATA%\CreatorHub\user-data`，与安装目录分开：
+数据位于 `%LOCALAPPDATA%\CreatorHub-KK\user-data`，与安装目录分开：
 
 - `config.yaml`、`data/`：配置、账号 Profile、数据库与媒体。
 - `browsers/`：浏览器组件，不打进安装包，首次启动自动下载。
@@ -104,7 +104,7 @@ python desktop/release.py 0.2.0
 
 ## 桌面开发与测试
 
-默认启动为手动模式，旧 `--no-autostart` 参数保留兼容。服务进程独立持有 `service.lock`，即使启动中心异常退出，新服务也不能同时使用同一数据目录。启动中心消失时先请求正常停止，启动或下载卡住超过 30 秒后结束本次服务进程树；源码版没有离线文档时继续使用在线教程。旧版本没有此保护，升级前仍需先退出旧版。
+默认启动服务并进入工作台，`--no-autostart` 只打开管理页。服务进程独立持有 `service.lock`，即使启动中心异常退出，新服务也不能同时使用同一数据目录。启动中心消失时先请求正常停止，启动或下载卡住超过 30 秒后结束本次服务进程树；源码版没有离线文档时继续使用在线教程。旧版本没有此保护，升级前仍需先退出旧版。
 
 父进程监视使用 Windows 进程句柄，避免仅按 PID 轮询；参考 [OpenProcess](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocess) 和 [WaitForSingleObject](https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject)。`tests/test_desktop_lifecycle.py` 在临时数据目录覆盖手动启动、重复服务拒绝、运行中丢失启动中心和启动卡住时的回收。
 

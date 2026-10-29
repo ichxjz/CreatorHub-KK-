@@ -75,7 +75,7 @@ class GuideSiteTests(unittest.TestCase):
             text = (ROOT / name).read_text(encoding='utf-8')
             for forbidden in ('assets/community/', 'assets/sponsors/', '#交流群', 'github.com/3441293738/creatorhub/releases'):
                 self.assertNotIn(forbidden, text)
-        self.assertIn('https://github.com/ichxjz/creatorhub/releases/latest', (ROOT / 'README.md').read_text())
+        self.assertIn('https://github.com/ichxjz/CreatorHub-KK-/releases/latest', (ROOT / 'README.md').read_text())
 
     def test_full_preview_preserves_demo_and_resolves_document_links(self):
         # build() requires a destination inside ROOT. Use a fresh child of an

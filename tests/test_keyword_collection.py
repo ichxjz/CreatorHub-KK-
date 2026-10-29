@@ -421,7 +421,7 @@ class KeywordCollectionPipelineTests(unittest.IsolatedAsyncioTestCase):
     async def test_api_mode_does_not_create_a_headed_browser_context(self):
         raw_aweme = {
             "aweme_id": "api-aweme-1",
-            "desc": "纯 API 搜索结果",
+            "desc": "露营 · 纯 API 搜索结果",
             "create_time": 1_700_000_000,
             "author": {"nickname": "示例作者", "sec_uid": "author-1"},
             "statistics": {"digg_count": 8, "comment_count": 0},
@@ -799,7 +799,7 @@ class XhsKeywordCollectionPipelineTests(unittest.IsolatedAsyncioTestCase):
     @staticmethod
     def _note(note_id: str, created: int, likes: int, comments: int) -> tuple[Aweme, dict, str]:
         aweme = Aweme(
-            aweme_id=note_id, desc=note_id, create_time=created,
+            aweme_id=note_id, desc=f"露营 {note_id}", create_time=created,
             author_name="作者", media_type="images",
             like_count=likes, comment_count=comments,
         )

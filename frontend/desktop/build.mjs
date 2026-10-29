@@ -18,7 +18,7 @@ for (const name of packages) {
   for (const file of ["LICENSE", "LICENSE.md", "LICENSE.txt", "LICENSE.MD"]) { try { license = await readFile(`node_modules/${name}/${file}`, "utf8"); break; } catch {} }
   if (!license && name === "react-remove-scroll-bar") license = await readFile("frontend/licenses/react-remove-scroll-bar.txt", "utf8");
   if (!license) throw Error(`Missing license: ${name}`);
-  notices.push(`${name}@${metadata.version}\n${license}`);
+  notices.push(`${name}@${metadata.version}\n${license.replace(/\r\n/g, "\n")}`);
 }
 await writeFile(`${out}/THIRD-PARTY-NOTICES.txt`, notices.join("\n\n"));
 console.log("Desktop renderer built: desktop/web");

@@ -6,11 +6,17 @@
 
 ## 下载
 
-- **KK 增强版 Windows 10/11 x64 EXE**：[Releases](https://github.com/ichxjz/creatorhub/releases/latest)。仅已完成 Windows 构建和自动冒烟测试的版本提供安装包；若尚无附件，请等待 Actions 完成。
-- [构建进度](https://github.com/ichxjz/creatorhub/actions/workflows/windows-installer.yml)
-- [完整源码 ZIP](https://github.com/ichxjz/creatorhub/archive/refs/heads/main.zip)
+- **KK 增强版 Windows 10/11 x64 EXE**：[Releases](https://github.com/ichxjz/CreatorHub-KK-/releases/latest)。仅已完成 Windows 构建和自动冒烟测试的版本提供安装包；若尚无附件，请等待 Actions 完成。
+- [构建进度](https://github.com/ichxjz/CreatorHub-KK-/actions/workflows/windows-installer.yml)
+- [完整源码 ZIP](https://github.com/ichxjz/CreatorHub-KK-/archive/refs/heads/main.zip)
 
 增强版使用独立的 `CreatorHub-KK` 安装和用户数据目录，更新来自本项目。不会自动迁移原版账号；首次使用需登录。内置 Node.js 用于洞察分析，无需另装 Node。安装器未做商业代码签名，系统可能显示未知发布者。
+
+## Windows 客户端
+
+双击启动后，自动进入与网页修改版相同的工作台。采集、评论洞察、5列任务卡片、分页、飞书导出和账号同步共用同一套功能。客户端菜单中的「服务与更新」负责诊断、停止与升级；无需先在启动中心手动启动。首次启动需联网准备浏览器组件。
+
+安装包下载：[Windows 最新版](https://github.com/ichxjz/CreatorHub-KK-/releases/latest)。Windows 电脑需要自行登录平台；Mac 的账号和采集数据不会随公开安装包分发。
 
 ## 功能演示（模拟数据）
 
@@ -59,7 +65,7 @@
 需 Python 3.12、Node.js 24+、Git、系统 Chrome。安装依赖后按[使用指南](USER_GUIDE.md)启动：
 
 ```sh
-git clone https://github.com/ichxjz/creatorhub.git
+git clone https://github.com/ichxjz/CreatorHub-KK-.git
 cd creatorhub
 python -m venv .venv
 # Windows: .venv\Scripts\activate

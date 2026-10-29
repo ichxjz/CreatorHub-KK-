@@ -64,7 +64,7 @@ def build(destination: Path) -> None:
     destination.mkdir(parents=True)
 
     html = (SOURCE / "index.html").read_text(encoding="utf-8")
-    html = html.replace('data-guide-base="https://ichxjz.github.io/creatorhub/guide/"',
+    html = html.replace('data-guide-base="https://ichxjz.github.io/CreatorHub-KK-/guide/"',
                         'data-guide-base="./guide/" data-preview="true"')
     # The static demo does not create real tasks or durable submission receipts.
     html = html.replace('<script src="/static/submissions.js"></script>', '')

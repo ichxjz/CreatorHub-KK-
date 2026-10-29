@@ -18,6 +18,13 @@ def main():
     sample = {"rows": [{"id": 1, "comment_id": "demo", "post_id": "demo", "platform": "douyin", "text": "请问安装多少钱？"}]}
     result = subprocess.run([str(runtime / "runtime/node.exe"), str(runtime / "app/insight_engine/worker.mjs")], input=json.dumps(sample), text=True, encoding="utf-8", capture_output=True, check=True, timeout=30)
     assert json.loads(result.stdout)["result"]["analysis"]["rawTotal"] == 1, "Bundled insights engine failed"
+    # All shipped enhancement assets must match this build, including insights,
+    # account sync and the Node modules; a partial copy cannot pass publication.
+    for folder in ("app/web", "app/insight_engine"):
+        for asset in (source / folder).rglob("*"):
+            if asset.is_file() and asset.suffix in {".html", ".js", ".css", ".mjs", ".json", ".svg"}:
+                relative = asset.relative_to(source)
+                assert (runtime / relative).read_bytes() == asset.read_bytes(), f"Stale or missing asset: {relative}"
 
     # Check both renderers and the offline guide, not just importability. A stale
     # local build must not silently ship the previous release's desktop styles.
@@ -30,7 +37,7 @@ def main():
         env = {**os.environ, "CREATORHUB_DESKTOP_HOME": temp, "PYTHONUTF8": "1"}
         try:
             subprocess.run([str(executable), "--smoke-test"], env=env, check=True, timeout=120)
-            subprocess.run([str(executable), "--shell-smoke-test"], env=env, check=True, timeout=120)
+            subprocess.run([str(executable), "--shell-smoke-test"], env=env, check=True, timeout=200)
         except Exception:
             for log in (home / "logs").glob("*.log"):
                 print(log.read_text(encoding="utf-8", errors="replace")[-12000:])
@@ -71,7 +78,7 @@ def main():
             assert duplicate.returncode != 0, "A duplicate frozen service used the same data directory"
             web = source / "app" / "web"
             assets = ("app.js", "engine-settings.js", "workbench.js", "workbench.css",
-                      "appearance.js", "appearance.css")
+                      "appearance.js", "appearance.css", "insights.js", "insights.css", "hub-sync.js")
             for path in ("/", "/health", "/guide/", "/guide/xhs/", "/guide/douyin/", "/guide/guide.css",
                          *(f"/static/{name}" for name in assets)):
                 with opener.open(url + path, timeout=5) as response:

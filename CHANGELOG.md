@@ -1,5 +1,15 @@
 # Independent releases
 
+## [0.4.2] - 2026-10-29
+
+- 双击 Windows 程序后自动启动本地服务，直接在客户端窗口打开增强版工作台。
+- 客户端与网页共用完整采集、洞察、5列任务卡片、分页、收藏备注、评论定位、账号同步及飞书导出功能。
+- 服务管理与检查更新移至客户端菜单；支持收起到托盘，停止前仍可确认。
+- 启用客户端文件下载，保留 Excel、CSV、JSON 与词云导出。
+- 更新与下载地址跟随独立仓库 CreatorHub-KK-；保留原有 Windows 用户数据目录。
+- 增加 Windows 原生 WebView2 工作台跳转、服务恢复与完整前端资源一致性验证。
+
+
 ## [0.4.1] - 2026-10-28
 
 - Make concurrency verification event-driven on Windows while retaining slot and automatic refill assertions.

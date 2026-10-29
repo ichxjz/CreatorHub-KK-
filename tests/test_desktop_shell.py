@@ -106,7 +106,8 @@ class DesktopShellTests(unittest.TestCase):
                 self.controller.action("open_guide", {"platform": "https://example.org"})
 
     def test_real_service_can_start_stop_and_start_again(self):
-        for _ in range(2):
+        self.controller.open_workbench = Mock()
+        for attempt in range(2):
             self.controller.start()
             worker = self.controller.worker
             self.controller.start()
@@ -116,6 +117,12 @@ class DesktopShellTests(unittest.TestCase):
                 time.sleep(.1)
             self.assertEqual(self.controller.state()["phase"], "ready")
             self.assertTrue(self.controller.state()["url"].startswith("http://127.0.0.1:"))
+            # Ready-state notification must enter the native workbench even
+            # when the browser-edition preference was previously disabled.
+            while self.controller.open_workbench.call_count < attempt + 1 and time.monotonic() < deadline:
+                time.sleep(.01)
+            self.assertEqual(self.controller.open_workbench.call_count, attempt + 1)
+            self.controller.open_workbench.assert_called_with(self.controller.url)
             self.controller.action("stop", {"confirmed": True})
             worker.join(timeout=40)
             self.assertFalse(worker.is_alive())

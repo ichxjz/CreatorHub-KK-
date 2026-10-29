@@ -47,6 +47,8 @@ class Controller:
         self.hide_window = None
         self.exit_window = None
         self.export_file = None
+        self.open_workbench = None
+        self.show_manager = None
         self.exiting = False
         install_dir = Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else None
         self.updates = UpdateChecker(version(), home / "runtime" / "updates", install_dir)
@@ -177,10 +179,10 @@ class Controller:
                             self.event("连接已恢复", "本地服务重新响应。", "success")
                         self.phase = "ready"
                         self.detail = "账号、监控与发布，都在你的本机工作台。"
-                        auto_open = not ready and self.preferences["open_on_ready"]
+                        auto_open = not ready and (self.open_workbench is not None or self.preferences["open_on_ready"])
                     ready = True
                     if auto_open:
-                        webbrowser.open(url)
+                        self.open_panel()
                 except (OSError, ValueError, KeyError):
                     failed_checks += 1
                     if ready and failed_checks == 3:
@@ -221,6 +223,18 @@ class Controller:
                     self.detail = "服务尚未完全退出，请再次尝试停止。"
             if self.exiting and self.exit_window and self.process is None:
                 self.exit_window()
+            elif self.show_manager:
+                self.show_manager()
+
+    def open_panel(self):
+        with self.lock:
+            url = self.url if self.phase == "ready" else None
+        if not url:
+            raise ValueError("本地服务尚未就绪，请先启动或等待连接恢复。")
+        if self.open_workbench:
+            self.open_workbench(url)
+        else:
+            webbrowser.open(url)
 
     def stop(self, exiting=False):
         with self.lock:
@@ -407,18 +421,14 @@ class Controller:
         elif name == "dismiss_close":
             self.close_requested = False
         elif name == "open_panel":
-            with self.lock:
-                url = self.url if self.phase == "ready" else None
-            if not url:
-                raise ValueError("本地服务尚未就绪，请先启动或等待连接恢复。")
-            webbrowser.open(url)
+            self.open_panel()
         elif name in {"open_data", "open_logs"}:
             os.startfile(str(self.home if name == "open_data" else self.home / "logs"))
         elif name == "open_guide":
             slug = data.get("platform", "")
             if slug not in {"", "douyin", "xhs", "kuaishou", "shipinhao"}:
                 raise ValueError("请选择有效的平台。")
-            root = self.url + "/guide/" if self.url and (resources() / "desktop-guide").exists() else "https://ichxjz.github.io/creatorhub/guide/"
+            root = self.url + "/guide/" if self.url and (resources() / "desktop-guide").exists() else "https://ichxjz.github.io/CreatorHub-KK-/guide/"
             webbrowser.open(root + (slug + "/" if slug else ""))
         elif name == "hide":
             if not self.hide_window:

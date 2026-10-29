@@ -444,7 +444,7 @@ class Launcher:
         if self.url and (resources() / "desktop-guide").exists():
             webbrowser.open(self.url + "/guide/")
         else:
-            webbrowser.open("https://ichxjz.github.io/creatorhub/guide/")
+            webbrowser.open("https://ichxjz.github.io/CreatorHub-KK-/guide/")
 
     def hide(self):
         from tkinter import messagebox
@@ -540,7 +540,7 @@ def main() -> int:
             ui.root.mainloop()
         else:
             from desktop.web_shell import run_desktop
-            run_desktop(home, install_browser=not args.skip_browser_install)
+            run_desktop(home, autostart=not args.no_autostart, install_browser=not args.skip_browser_install)
     except Exception as exc:
         from tkinter import messagebox
         messagebox.showerror("CreatorHub 启动提示", str(exc))

@@ -88,15 +88,17 @@ class ShellHandler(BaseHTTPRequestHandler):
             self.json(500, {"error": "操作未完成，请检查本机权限或稍后重试。"})
 
 
-def run_desktop(home, *, autostart=False, install_browser=True):
+def run_desktop(home, *, autostart=True, install_browser=True):
     import webview
     import pystray
     from desktop.ui import brand_image
+    from desktop.workbench_window import WorkbenchWindow
+    from webview.menu import Menu, MenuAction
     lock = InstanceLock(home)
     controller = Controller(home, install_browser=install_browser)
     server = ShellServer(controller)
     threading.Thread(target=server.serve_forever, daemon=True).start()
-    window = webview.create_window("CreatorHub", server.origin, width=1100, height=800,
+    window = webview.create_window("CreatorHub KK · 服务与更新", server.origin, width=1100, height=800,
                                   min_size=(740, 580), background_color="#f4f5f8", text_select=True)
     tray = None
     allow_close = threading.Event()
@@ -104,26 +106,25 @@ def run_desktop(home, *, autostart=False, install_browser=True):
         allow_close.set()
         if tray:
             tray.stop()
-        window.destroy()
+        workspace.destroy()
     def closing():
         if allow_close.is_set():
             return True
         if controller.installing_update:
             return False
         controller.close_requested = True
-        window.show()
+        workspace.show_manager()
         return False
-    def restore():
-        window.show()
-        window.restore()
+    workspace = WorkbenchWindow(webview, controller, window, closing, allow_close)
     def hide():
         nonlocal tray
         if not tray:
-            tray = pystray.Icon("CreatorHub", brand_image(), "CreatorHub 启动中心", menu=pystray.Menu(
-                pystray.MenuItem("打开启动中心", restore, default=True),
+            tray = pystray.Icon("CreatorHub", brand_image(), "CreatorHub KK", menu=pystray.Menu(
+                pystray.MenuItem("打开工作台", workspace.restore, default=True),
+                pystray.MenuItem("服务与更新", workspace.show_manager),
                 pystray.MenuItem("停止并退出", closing)))
             tray.run_detached()
-        window.hide()
+        workspace.hide()
     def export(summary):
         selected = window.create_file_dialog(webview.FileDialog.SAVE, save_filename="creatorhub-diagnostics.json", file_types=("JSON (*.json)",))
         if not selected:
@@ -132,11 +133,24 @@ def run_desktop(home, *, autostart=False, install_browser=True):
         Path(path).write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
         return True
     controller.hide_window, controller.exit_window, controller.export_file = hide, finish, export
+    controller.open_workbench, controller.show_manager = workspace.open, workspace.show_manager
     window.events.closing += closing
-    window.events.loaded += lambda: controller.start() if autostart else None
+    started = threading.Event()
+    def loaded():
+        if autostart and not started.is_set():
+            started.set()
+            controller.start()
+    window.events.loaded += loaded
     window.events.loaded += controller.updates.start_monitor
+    webview.settings["ALLOW_DOWNLOADS"] = True
+    webview.settings["OPEN_EXTERNAL_LINKS_IN_BROWSER"] = True
+    menu = [Menu("CreatorHub", [MenuAction("打开工作台", workspace.restore),
+                               MenuAction("服务与更新", workspace.show_manager),
+                               MenuAction("收起到托盘", hide),
+                               MenuAction("停止并退出", closing)])]
     try:
-        webview.start(gui="edgechromium", private_mode=False, storage_path=str(home / "runtime" / "shell-browser"))
+        webview.start(gui="edgechromium", private_mode=False, menu=menu,
+                      storage_path=str(home / "runtime" / "shell-browser"))
     finally:
         controller.updates.stop_monitor()
         controller.updates.cancel_download()

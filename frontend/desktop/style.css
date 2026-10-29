@@ -1645,3 +1645,6 @@ kbd, .key-button {
     scroll-behavior: auto !important;
   }
 }
+
+/* Keep the developer signature legible in the service manager. */
+.brand small { font-size: 10px; line-height: 1.6; letter-spacing: 0; white-space: normal; overflow-wrap: anywhere; }
