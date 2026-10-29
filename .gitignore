@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
+test-results/
+playwright-report/
+
+# Local verification, rollback, and temporary agent outputs
+artifacts/
+.codex-*/
+*.tmp
+
+# Virtualenv
+.venv/
+venv/
+env/
+
+# Node (xhs publish signing deps)
+node_modules/
+_site/
+build/
+dist/
+
+# IDE
+.idea/
+.vscode/
+.worktrees/
+
+# Claude Code 本地技能/配置(不随仓库发布)
+.claude/
+
+# Runtime data (login states, downloaded media, sqlite db, uploads)
+data/
+logs/
+*.db
+config.yaml
+
+# 内部方案文档(不随公开仓库发布)
+docs/
